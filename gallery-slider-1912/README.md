@@ -1,8 +1,9 @@
 ## 갤러리 슬라이더
-<a href="https://sssjsjj.github.io/study/gallery-slider-1912" title="새창" target="_blank">VIEW</a>
+<a href="https://sssjsjj.github.io/study/calendar/" title="새창" target="_blank">VIEW</a>
 
-- 생성자 함수 이용하기
-- 슬라이더 2개 연동하기
-- 슬라이더는 독립적으로도 작동되어야함
-
-* 실제 프로젝트에서 일반 슬라이더를 갤러리 슬라이더로 변경해달라는 요청이 있었다. 기존 소스로는 작업이 어려워 처음부터 새로 작업된 사례가 있어 진행된 과제. 확장성, 유지보수성을 생각하며 작업.
+- 생성자 함수 사용해보기
+- 초기 화면은 오늘이 노출되도록
+- 이전, 다음 달로 이동 기능
+- 스케줄은 json으로 호출
+- 스케줄 클릭 시 상세정도 팝업 노출
+- 스케줄 drag&drop으로 수정 기능

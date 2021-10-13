@@ -12,7 +12,7 @@ function Calendar(elem) {
   this.sorting = "month";
   // 카렌다 시작
   this.start = () => {
-    httpGet("/month.html", responseText => {
+    httpGet("/study/calendar/month.html", responseText => {
       const areaCalendar = document.getElementById("areaCalendar");
       areaCalendar.innerHTML = responseText;
       this.goToHash();
@@ -111,7 +111,7 @@ Calendar.prototype.markToday = function(){
 };
 // 스케쥴 가져오기
 Calendar.prototype.getSchedule = function(){
-  httpGet("/js/schedules.js", responseText => {
+  httpGet("/study/calendar/js/schedules.js", responseText => {
     this.schedules = JSON.parse(responseText);
     for(let key in this.schedules){
       const schedule = this.schedules[key];
@@ -181,7 +181,6 @@ Calendar.prototype.popupMarkup = function(schedule){
 };
 // 팝업 상호작용
 Calendar.prototype.popupInteract = function(buttons, popup){
-  
   console.log(buttons,popup)
   clickEvent(buttons, e => {
     const activePopup = document.querySelector('.layerPopup.show')
