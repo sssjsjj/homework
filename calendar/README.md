@@ -1,5 +1,5 @@
 ## 캘린더
-<a href="https://sssjsjj.github.io/study/calendar/" title="새창" target="_blank">작업 확인하기</a>
+<a href="https://sssjsjj.github.io/study/calendar/">👀 작업 확인하기</a>
 
 - 생성자 함수 사용해보기
 - 초기 화면은 오늘이 노출되도록

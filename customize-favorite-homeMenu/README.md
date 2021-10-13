@@ -1,6 +1,6 @@
 ## 홈 화면에 즐겨찾는 메뉴 설정 기능
 
-  <a href="https://sssjsjj.github.io/study/customize-favorite-homeMenu/" title="새창" target="_blank">작업 확인하기</a>
+  <a href="https://sssjsjj.github.io/study/customize-favorite-homeMenu/">👀 작업 확인하기</a>
 
 - 즐겨찾는 메뉴 최대 5개로 제한
 - 새로고침해도 설정한 메뉴 그대로 노출 (localStorage 활용해보기)

@@ -1,5 +1,5 @@
 ## 갤러리 슬라이더
-<a href="https://sssjsjj.github.io/study/gallery-slider/" title="새창" target="_blank">작업 확인하기</a>
+<a href="https://sssjsjj.github.io/study/gallery-slider/">👀 작업 확인하기</a>
 
 - 생성자 함수 사용해보기
 - 슬라이더 2개 연동하기
