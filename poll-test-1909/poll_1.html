@@ -1,0 +1,147 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<style>
+		body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,form,fieldset,p,button{margin:0; padding:0}
+		body,h1,h2,h3,h4,input,button,textarea{font-family:'맑은고딕','돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif; font-size:12px; color:#000;}
+		body{text-align:left; word-break:break-word;}
+		img,fieldset,iframe{border:0 none}
+		li{list-style:none}
+		input,select,button{vertical-align:middle}
+		img{vertical-align:top}
+		i,em,address{font-style:normal}
+		label,button{cursor:pointer}
+		a{color:#000; text-decoration:none}
+		hr{display:none}
+		legend{*width:0}
+		table{border-collapse:collapse; border-spacing:0}
+		caption{font-size:0; line-height:0; height:0}
+
+		.area_poll {padding: 30px;}
+		.box_poll {margin-top: 30px; padding-bottom: 30px;}
+		.box_poll .txt_question {position: relative; padding-left: 60px; font-size: 15px; line-height: 1.3em; color: #222;}
+		.box_poll .txt_question .txt_order {display: inline-block; position: absolute; top: 0; left: 0; margin-right: 10px; padding: 0 10px; background-color: #aba000; font-size: 13px; color: #fff;}
+		.box_poll_graph {position: relative; margin-left: 90px; margin-right: 120px; margin-top: 20px;}
+		.list_poll_graph li {position: relative; height: 30px; font-size: 15px; line-height: 30px; color: #666;}
+		.list_poll_graph li .txt {display: block; position: absolute; top: 0; left: -90px; width: 80px; text-align: right;}
+		.list_poll_graph li .bar_graph {display: inline-block; vertical-align: middle; position: relative; width: 50px; height: 10px; text-align: right;}
+		.list_poll_graph li .bar_graph .txt_num {display: inline-block; font-size: 12px; margin: 5px -5px 0 0; transform: translate(100%, -50%)}
+		.list_poll_graph li:nth-child(1) .bar_graph {background-color: olive; }
+		.list_poll_graph li:nth-child(2) .bar_graph {background-color: orange; }
+		.list_poll_graph li:nth-child(3) .bar_graph {background-color: orangered; }
+		.list_poll_graph li:nth-child(4) .bar_graph {background-color: palevioletred; }
+		.list_poll_graph li:nth-child(5) .bar_graph {background-color: purple; }
+		.box_poll_graph .txt_total {position: absolute; top: 0; right: -120px; -webkit-box-sizing:border-box; box-sizing:border-box; width: 100px; height: 100%; font-size: 18px; color: #222; text-align: center;}
+		.box_poll_graph .txt_total .average {display: block; font-weight: bold; font-size: 23px; color: #f26522;} 
+
+		/* graph index - vertical */
+		.index_graph{display: flex; justify-content: space-between; position: absolute; top: 0; left: 0; width: 100%; height:100%;}
+		.index_graph > .item { position: relative; border-right: 1px solid #eee;}
+		.index_graph > .item .txt_num{position: absolute; bottom: 0; color:#999; word-break: keep-all; transform: translate( -50%, 100%); }
+		
+	</style>
+	<!-- <script type="text/javascript" src="./jquery-1.11.3.min.js"></script> -->
+</head>
+<body>
+<div class="area_poll">
+	<!-- 문항 -->
+	<div class="box_poll" data-js="question">
+		<p class="txt_question"><span class="txt_order">문항 1</span>강의계획이 체계적이었으며, 학사일정에 맞추어 안내하였다. </p>
+		<div class="box_poll_graph">
+			<ul class="index_graph"> <!-- script drawing --> </ul>
+			<ul class="list_poll_graph">
+				<li>
+					<span class="txt">매우 아니다</span>
+					<span class="bar_graph"><span class="txt_num"><!--script drawing--></span></span>
+				</li>
+				<li>
+					<span class="txt">아니다</span>
+					<span class="bar_graph"><span class="txt_num"><!--script drawing--></span></span>
+				</li>
+				<li>
+					<span class="txt">보통이다</span>
+					<span class="bar_graph"><span class="txt_num"><!--script drawing--></span></span>
+				</li>
+				<li>
+					<span class="txt">그렇다</span>
+					<span class="bar_graph"><span class="txt_num"><!--script drawing--></span></span>
+				</li>
+				<li>
+					<span class="txt">매우 그렇다</span>
+					<span class="bar_graph"><span class="txt_num"><!--script drawing--></span></span>
+				</li>
+			</ul>
+			<p class="txt_total">평점 <span class="average"><!--script drawing--></span></p>
+		</div>
+	</div>
+	<!-- //문항 -->
+	<!-- 문항 -->
+	<div class="box_poll" data-js="question">
+		<p class="txt_question"><span class="txt_order">문항 2</span>강의계획이 체계적이었으며, 학사일정에 맞추어 안내하였다. </p>
+		<div class="box_poll_graph">
+			<ul class="index_graph"> <!-- script drawing --> </ul>
+			<ul class="list_poll_graph">
+				<li>
+					<span class="txt">매우 아니다</span>
+					<span class="bar_graph"><span class="txt_num"><!--script drawing--></span></span>
+				</li>
+				<li>
+					<span class="txt">아니다</span>
+					<span class="bar_graph"><span class="txt_num"><!--script drawing--></span></span>
+				</li>
+				<li>
+					<span class="txt">보통이다</span>
+					<span class="bar_graph"><span class="txt_num"><!--script drawing--></span></span>
+				</li>
+				<li>
+					<span class="txt">그렇다</span>
+					<span class="bar_graph"><span class="txt_num"><!--script drawing--></span></span>
+				</li>
+				<li>
+					<span class="txt">매우 그렇다</span>
+					<span class="bar_graph"><span class="txt_num"><!--script drawing--></span></span>
+				</li>
+			</ul>
+			<p class="txt_total">평점 <span class="average"><!--script drawing--></span></p>
+		</div>
+	</div>
+	<!-- //문항 -->
+	<!-- 문항 -->
+	<div class="box_poll" data-js="question">
+		<p class="txt_question"><span class="txt_order">문항 3</span>강의계획이 체계적이었으며, 학사일정에 맞추어 안내하였다. </p>
+		<div class="box_poll_graph">
+			<ul class="index_graph"> <!-- script drawing --> </ul>
+			<ul class="list_poll_graph">
+				<li>
+					<span class="txt">매우 아니다</span>
+					<span class="bar_graph"><span class="txt_num"><!--script drawing--></span></span>
+				</li>
+				<li>
+					<span class="txt">아니다</span>
+					<span class="bar_graph"><span class="txt_num"><!--script drawing--></span></span>
+				</li>
+				<li>
+					<span class="txt">보통이다</span>
+					<span class="bar_graph"><span class="txt_num"><!--script drawing--></span></span>
+				</li>
+				<li>
+					<span class="txt">그렇다</span>
+					<span class="bar_graph"><span class="txt_num"><!--script drawing--></span></span>
+				</li>
+				<li>
+					<span class="txt">매우 그렇다</span>
+					<span class="bar_graph"><span class="txt_num"><!--script drawing--></span></span>
+				</li>
+			</ul>
+			<p class="txt_total">평점 <span class="average"><!--script drawing--></span></p>
+		</div>
+	</div>
+	<!-- //문항 -->
+</div>
+<script type="text/javascript" src="polls.js"></script>
+</body>
+</html>

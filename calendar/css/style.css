@@ -1,0 +1,75 @@
+/* reset */
+html, body, header, aside, main, section, article,
+div, ul, ol, dl, li, dt, dd, p,
+h1, h2, h3, h4, h5, h6{margin: 0; padding: 0; vertical-align: top;}
+ul, ol, dl, li, dt, dd{list-style: none;}
+a{text-decoration: none; color: #333;}
+button{padding: 0; border: none; background-color: transparent; cursor: pointer;}
+
+/* common */
+.hide{display: none !important;}
+.ir-hidden{display: block; overflow: hidden; position: absolute; top: -999em; left: -999em; width: 1px; height: 1px; text-indent: -999em;}
+
+/* icons */
+[class*="icon-"]{color: #aaa;}
+.icon-cross{display: block; position: relative; width: 20px; height: 20px; transform: rotate(45deg); transition: 0.2s;}
+.icon-cross:before,
+.icon-cross:after{display: block; position: absolute; left: 50%; top: 50%; width: 100%; height: 1px; transform: translate(-50%, -50%); box-shadow: inset 0 0 0 32px; content:'';}
+.icon-cross:after{height: 100%; width: 1px;}
+
+/* calendar */
+body{font-size: 14px;}
+.page-calendar .banner-top{padding: 40px 30px; background-color: lavender;}
+.page-calendar .banner-top h2{margin-bottom: 10px;}
+.page-calendar .banner-top li + li{margin-top: 5px;}
+.page-calendar{position: fixed; width: 100%; height: 100%;}
+.page-calendar,
+.page-calendar .wrap-calendar,
+.page-calendar .area-calendar,
+.page-calendar table.calendar,
+.page-calendar table.calendar tbody{display: flex; flex-direction: column; flex: 1;}
+.page-calendar header{display: flex; padding: 20px 50px; border-bottom: 1px solid #dcdadf;}
+.page-calendar header h1{font-weight: normal; font-size: 22px; color: #666;}
+.page-calendar header .area-arrow{margin: 0 30px;}
+.page-calendar header .area-arrow button{overflow: hidden; position: relative; width: 15px; height: 100%; text-indent: -999em;}
+.page-calendar header .area-arrow button:before,
+.page-calendar header .area-arrow button:after{display: block; position: absolute; top: 0; bottom: 0; width: 15px; height: 2px; margin: auto 0; background-color: #ccc; transform-origin: right; content:'';}
+.page-calendar header .area-arrow button:before{transform: rotate(45deg);}
+.page-calendar header .area-arrow button:after{transform: rotate(-45deg);}
+.page-calendar header .area-arrow button.prev{transform: rotate(180deg); transform-origin: center;}
+.page-calendar header .area-arrow button.next{margin-left: 15px;}
+.page-calendar header .sorting{margin-left: auto;}
+.page-calendar table.calendar{width: 100%; height: 100%;}
+.page-calendar table.calendar caption{position: absolute; left: -999em; width: 1px; height: 1px; text-indent: -999em;}
+.page-calendar table.calendar tr{display: flex; flex: 1; }
+.page-calendar table.calendar tr > *{width: 14.3%;}
+.page-calendar table.calendar tr > * + *{border-left: 1px solid #eee;}
+.page-calendar table.calendar thead tr th{padding-top: 5px; font-weight: normal; font-size: 0.85em; color: #999;}
+.page-calendar table.calendar tbody tr{border-bottom: 1px solid #eee;}
+.page-calendar table.calendar tbody tr td{position: relative; text-align: center;}
+.page-calendar table.calendar tbody tr td span.date{display: inline-block; width: 1rem; height: 1rem; padding: 3px 2px 1px; border-radius: 100%;}
+.page-calendar table.calendar tbody tr td.today span.date{background-color: royalblue; color: #fff;}
+.page-calendar table.calendar tbody tr td button {font-size: 0.85em;}
+.page-calendar table.calendar button.detail-plan{display: block; position: relative; z-index: 1; margin-top: 3em; box-sizing: content-box; padding: 2px 0 4px; background-color: darkseagreen; color: #fff; border-radius: 5px; transition: padding 0.2s, margin 0.2s;} 
+.page-calendar table.calendar button.detail-plan:hover {margin-left: -6px; padding-left: 6px; padding-right: 6px;}
+.page-calendar table.calendar button.add-schedule{display: inline-flex; justify-content: center; position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 10px; transition: box-shadow 0.2s;}
+.page-calendar table.calendar button.add-schedule .add-txt{display: block; position: absolute; bottom: 0px; width: 100%; font-size: 12px; color: lightcoral; letter-spacing: 0.05em; opacity: 0; transition: 0.2s;}
+.page-calendar table.calendar button.add-schedule:hover {box-shadow: 0 0 30px #eee;}
+.page-calendar table.calendar button.add-schedule:hover .add-txt{bottom: 10px; opacity: 1;}
+
+/* calendar layerpopup */
+.wrap-calendar .layerPopup{top: -50%; right: 100%; width: 200px; margin-right: 10px;}
+.wrap-calendar .layerPopup h2.tit-popup{font-size: 12px; font-weight: normal; }
+.wrap-calendar .layerPopup h3.tit-sch{margin-top: 15px; font-size: 16px;}
+.wrap-calendar .layerPopup p.date{margin-top: 5px;}
+.wrap-calendar .layerPopup p.desc{margin-top: 5px;}
+
+/* layerpopup common */
+.layerPopup{position: absolute; z-index: 999; padding: 25px; background-color: #fff; border: 1px solid #eee; text-align: left; box-shadow: 0px 0px 20px rgba(0,0,0,0.1); border-radius: 10px;}
+.layerPopup button.close{position: absolute; top: 5px; right: 5px; padding: 10px; transition: 0.3s;}
+.layerPopup button.close:hover {transform: rotate(90deg);}
+.layerPopup button.close:active{outline: none;}
+.layerPopup button.close:active {transform: rotate(90deg) scale(0.8)}
+
+/* position: fixed; top: 50%; left: 50%; z-index: 999; 
+transform: translate(-50%, -50%);  */
