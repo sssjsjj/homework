@@ -147,14 +147,15 @@ Calendar.prototype.drawSchedulesHandler = function() {
 
 Calendar.prototype.drawSchedule = function(schedule){
   const date = schedule.date
-  const daysNum = Array.isArray(date) ? date[1] - date[0] + 2 : 1
+  const daysNum = date.length
   const barWidth = `(2px * ${daysNum-1}) + (100% * ${daysNum})`
   const scheduleBar = this.scheduleBarHTML(barWidth, schedule)
   const schedulePopup = this.schedulePopupHTML(schedule)
   schedule.el = {}
   if(!schedule.el.area) {
-    schedule.el.area = document.querySelector(`[data-date="${date}"]`)
+    schedule.el.area = document.querySelector(`[data-date="${date[0]}"]`)
   }
+  console.log('area', schedule.el.area)
   schedule.el.area.appendChild(scheduleBar)
   schedule.el.area.appendChild(schedulePopup)
   schedule.el.scheduleBar = scheduleBar
@@ -174,10 +175,9 @@ Calendar.prototype.scheduleBarHTML = function(barWidth, schedule){
 }
 
 Calendar.prototype.getWhatDay = function(year, month, date){  
-  const dateArr = Array.isArray(date) ? date : [date]
   const days = []
-  for(let i = 0; i < dateArr.length; i++){
-    let day = new Date(year, month-1, dateArr[i]).getDay();
+  for(let i = 0; i < date.length; i++){
+    let day = new Date(year, month-1, date[i]).getDay();
     switch(day){
       case 0: days.push("일요일"); break
       case 1: days.push("월요일"); break
@@ -206,8 +206,8 @@ Calendar.prototype.schedulePopupHTML = function(schedule){
   const days = schedule.days
   const title = schedule.title || ''
   const description = schedule.description || ''
-  let periodText = this.periodText(month, date, days)
-  if(Array.isArray(date)) {
+  let periodText = this.periodText(month, date[0], days)
+  if(date.length > 1) {
     periodText = `${this.periodText(month, date[0], days[0])} ~ ${this.periodText(month, date[1], days[1])}`
   }
 
