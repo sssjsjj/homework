@@ -12,7 +12,7 @@ function Calendar(elem) {
   this.sorting = "month"
   // 카렌다 시작
   this.start = () => {
-    httpGet("/calendar/month.html", responseText => {
+    httpGet("/calendar/month.html", responseText => { //Q. 폴더 구조 변경때마다 경로 바꿔야하는데 방법이 없을까?
       const areaCalendar = document.getElementById("areaCalendar")
       areaCalendar.innerHTML = responseText
       this.goToHash()
@@ -20,6 +20,7 @@ function Calendar(elem) {
       this.drawYearMonth()
       this.drawDays()
       this.getSchedule()
+      console.log('start', this.schedules)
       this.addNewSchedule()
       this.markToday()
       this.arrowControl()
@@ -109,11 +110,19 @@ Calendar.prototype.markToday = function(){
 }
 // 스케쥴 가져오기
 Calendar.prototype.getSchedule = function(){
-  httpGet("/calendar/js/schedules.js", responseText => {
-    this.schedules = JSON.parse(responseText)
+  const localSchedule = JSON.parse(localStorage.getItem('schedule'))
+  if(!localSchedule) {
+    httpGet("/calendar/js/schedules.js", responseText => {
+      this.schedules = JSON.parse(responseText)
+      this.setScheduleLocal()
+      this.drawSchedulesHandler()
+      this.dragDrop()
+    })
+  } else {
+    this.schedules = localSchedule
     this.drawSchedulesHandler()
     this.dragDrop()
-  })
+  }
 }
 
 Calendar.prototype.setScheduleState = function(sce){
@@ -124,13 +133,14 @@ Calendar.prototype.drawSchedulesHandler = function() {
   for(let index in this.schedules){
     const schedule = this.schedules[index]
     schedule.index = Number(index)
+
     if(this.year === schedule.year && this.month + 1 === schedule.month){
-      // 요일 계샨 (장기 스케쥴일 수도 있으니 여러개인 경우 감안하여 계산.)
+      // 요일 계산 (장기 스케쥴일 수도 있으니 여러개인 경우 감안하여 계산.)
       schedule.days = this.getWhatDay(schedule.year, schedule.month, schedule.date)
       // 일정 있는 날짜에 버튼과 팝업 삽입
       this.drawSchedule(schedule)
       // 삽입된 버튼에 이벤트 추가
-      this.addPopupEvent(schedule)
+      this.addEventPopup(schedule)
     }
   }
 }
@@ -139,26 +149,27 @@ Calendar.prototype.drawSchedule = function(schedule){
   const date = schedule.date
   const daysNum = Array.isArray(date) ? date[1] - date[0] + 2 : 1
   const barWidth = `(2px * ${daysNum-1}) + (100% * ${daysNum})`
-  const viewButton = this.viewButtonHTML(barWidth, schedule)
+  const scheduleBar = this.scheduleBarHTML(barWidth, schedule)
   const schedulePopup = this.schedulePopupHTML(schedule)
-  if(!schedule.area) {
-    schedule.area = document.querySelector(`[data-date="${date}"]`)
+  schedule.el = {}
+  if(!schedule.el.area) {
+    schedule.el.area = document.querySelector(`[data-date="${date}"]`)
   }
-  schedule.area.appendChild(viewButton)
-  schedule.area.appendChild(schedulePopup)
-  schedule.viewButton = viewButton
-  schedule.popup = schedulePopup
+  schedule.el.area.appendChild(scheduleBar)
+  schedule.el.area.appendChild(schedulePopup)
+  schedule.el.scheduleBar = scheduleBar
+  schedule.el.popup = schedulePopup
   schedule.isPopupOn = false
 }
 
-Calendar.prototype.viewButtonHTML = function(barWidth, schedule){
+Calendar.prototype.scheduleBarHTML = function(barWidth, schedule){
   const button = document.createElement('button')
-  button.classList.add('view-schedule')
+  button.classList.add('bar-schedule')
   button.style = `width: calc(${barWidth})`
   button.setAttribute('draggable', true)
   button.dataset.js = 'dragDrop'
   button.dataset.index = schedule.index
-  button.innerHTML = schedule.title
+  button.innerHTML = schedule.title ? schedule.title : '새 스케줄'
   return button
 }
 
@@ -193,8 +204,8 @@ Calendar.prototype.schedulePopupHTML = function(schedule){
   const month = schedule.month
   const date = schedule.date
   const days = schedule.days
-  const title = schedule.title
-  const description = schedule.description
+  const title = schedule.title || ''
+  const description = schedule.description || ''
   let periodText = this.periodText(month, date, days)
   if(Array.isArray(date)) {
     periodText = `${this.periodText(month, date[0], days[0])} ~ ${this.periodText(month, date[1], days[1])}`
@@ -203,22 +214,25 @@ Calendar.prototype.schedulePopupHTML = function(schedule){
   popup.innerHTML = `
   <div class="area-basic">
     <div class="content">
-      <h3 class="tit-sch"><button class="change-title">${title}</button></h3>
-      <input type="text" value="${title}" class="tit-sch"/>
+      <h3 class="tit-sch"><button class="change-title hide">${title}</button></h3>
+      <input type="text" value="${title}" id="scheduleTitle" class="tit-sch" placeholder="새 스케줄"/>
       <p class="period"><button class="change-period">${periodText}</button></p>
-      <p class="desc" data-js="schDesc"><button class="change-desc">${description}</button></p>
-      <input type="text" value="${description}" class="desc"/>
+      <p class="desc" data-js="schDesc"><button class="change-desc hide">${description}</button></p>
+      <input type="text" value="${description}" id="scheduleDesc" class="desc" placeholder="스케줄 내용"/>
     </div>
-    <div class="bottom"><button class="save-schedule">저장</button></div>
+    <div class="bottom"><button class="save-schedule hide">저장</button></div>
   </div>
   <button class="close" data-js="close"> <i class="icon-cross"></i> <span class="ir-hidden">닫기</span></button>
   `
   return popup
 }
-// 팝업 상호작용
-Calendar.prototype.addPopupEvent = function(schedule){
-  schedule.viewButton.addEventListener('click', e => this.showPopup(e.clientX, schedule))
+
+// 팝업 기능
+Calendar.prototype.addEventPopup = function(schedule){
+  schedule.el.scheduleBar.addEventListener('click', e => this.showPopup(e.clientX, schedule))
   this.addCloseEvent(schedule)
+  this.checkInputChange(schedule)
+  this.addSaveEvent(schedule)
 }
 
 Calendar.prototype.popupPosition = function(clientX, popup){
@@ -231,24 +245,37 @@ Calendar.prototype.popupPosition = function(clientX, popup){
 
 Calendar.prototype.showPopup = function(clientX, schedule){
   const activePopup = document.querySelector('.layerPopup.show')
+  const popup = schedule.el.popup
   if(activePopup) {
     const activeSchedule = this.schedules[activePopup.dataset.index]
     this.closePopup(activeSchedule)
   }
-  this.popupPosition(clientX, schedule.popup)
-  show(schedule.popup)
+  this.popupPosition(clientX, popup)
+  show(popup)
+  const visibleInput = popup.querySelector('input:not(.hide)')
+  if(visibleInput) visibleInput.focus()
 }
 
 Calendar.prototype.closePopup = function(schedule){
-  if(schedule.title === 'new schedule') {
-    schedule.viewButton.remove()
-    schedule.viewButton = null
+  if(schedule.isEdited) {
+    const checkSave = confirm('변경사항을 저장하시겠습니까?')
+    checkSave 
+    ? this.save(schedule)
+    : schedule.el.scheduleBar.innerText = schedule.title
   }
-  hide(schedule.popup)
+
+  // 내용 없는 상태로 팝업 닫는 경우 스케줄바도 제거
+  if(schedule.title === null) {
+    schedule.el.scheduleBar.remove()
+    schedule.el.scheduleBar = null
+  }
+
+  hide(schedule.el.popup)
+  console.log('end close popup', this.schedules)
 }
 
 Calendar.prototype.addCloseEvent = function(schedule){
-  const closeButton = schedule.popup.querySelector("button[data-js='close']")
+  const closeButton = schedule.el.popup.querySelector("button[data-js='close']")
   closeButton.addEventListener('click', () => this.closePopup(schedule))
 }
 
@@ -267,6 +294,7 @@ Calendar.prototype.dragDrop = function(){
     td.ondrop = function(e){
       e.preventDefault()
       const data = e.dataTransfer.getData("plan")
+      if(e.movementX < 10 && e.movementY < 10) return false
       td.appendChild(document.getElementById(data))
     }
     td.ondragover = function(e){
@@ -290,13 +318,15 @@ Calendar.prototype.addNewSchedule = function(){
         month: month,
         date: date,
         days: this.getWhatDay(this.year, month, date),
-        title: 'new schedule',
+        title: null,
+        description: null,
       }
       this.drawSchedule(newSchedule)
-      this.addPopupEvent(newSchedule)
+      this.addEventPopup(newSchedule)
       this.showPopup(e.clientX, newSchedule)
       // 스케줄 데이터 저장
       this.schedules.push(newSchedule)
+      console.log(this.schedules)
     }
   }
 }
@@ -332,6 +362,39 @@ Calendar.prototype.arrowControl = function(){
     this.drawSchedulesHandler()
     this.markToday()
   })
+}
+
+Calendar.prototype.checkInputChange = function(schedule){
+  const popup = schedule.el.popup
+  const inputs = schedule.el.popup.querySelectorAll(`input[type='text']`)
+  for(const input of inputs) {
+    const inputTextBefore = input.value
+    input.addEventListener('keyup', e => {
+      const saveButton = popup.querySelector('.save-schedule')
+      if(inputTextBefore != input.value) {
+        if(!schedule.isEdited) schedule.isEdited = true
+        saveButton.classList.remove('hide')
+        schedule.el.scheduleBar.innerText = input.value
+      }
+    })
+  }
+}
+
+Calendar.prototype.addSaveEvent = function(schedule){
+  const saveButton = schedule.el.popup.querySelector('.save-schedule')
+  saveButton.addEventListener('click', e => this.save(schedule))
+}
+
+Calendar.prototype.save = function(schedule){
+  schedule.title = document.getElementById('scheduleTitle').value
+  schedule.description = document.getElementById('scheduleDesc').value
+  schedule.isEdited = false
+  this.setScheduleLocal()
+  hide(schedule.el.popup)
+}
+
+Calendar.prototype.setScheduleLocal = function(){
+  localStorage.setItem('schedule', JSON.stringify(this.schedules))  
 }
 
 const calendar = new Calendar(document.getElementById("wrapCalendar"))
