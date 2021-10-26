@@ -12,7 +12,7 @@ function Calendar(elem) {
   this.sorting = "month"
   // 카렌다 시작
   this.start = () => {
-    httpGet("/calendar/month.html", responseText => { //Q. 폴더 구조 변경때마다 경로 바꿔야하는데 방법이 없을까?
+    httpGet(`${window.location.pathname}/month.html`, responseText => {
       const areaCalendar = document.getElementById("areaCalendar")
       areaCalendar.innerHTML = responseText
       this.goToHash()
@@ -112,7 +112,7 @@ Calendar.prototype.markToday = function(){
 Calendar.prototype.getSchedule = function(){
   const localSchedule = JSON.parse(localStorage.getItem('schedule'))
   if(!localSchedule) {
-    httpGet("/calendar/js/schedules.js", responseText => {
+    httpGet(`${window.location.pathname}/js/schedules.js`, responseText => {
       this.schedules = JSON.parse(responseText)
       this.setScheduleLocal()
       this.drawSchedulesHandler()
