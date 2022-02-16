@@ -49,17 +49,38 @@
     "description": ""
   },
   {
-    "year": 2021,
-    "month": 8,
+    "year": 2022,
+    "month": 1,
     "date": [12,15],
     "title": "함평",
     "description": "#누나형아언제와?"
   },
   {
-    "year": 2021,
-    "month": 10,
+    "year": 2022,
+    "month": 1,
     "date": [25],
     "title": "월급날",
     "description": "#급해요빨리요어서와"
+  },
+  {
+    "year": 2022,
+    "month": 2,
+    "date": [17],
+    "title": "친구 생일",
+    "description": "치즈 케이크 사주기"
+  },
+  {
+    "year": 2022,
+    "month": 2,
+    "date": [22,23],
+    "title": "내 계획",
+    "description": "이러이러한계획"
+  },
+  {
+    "year": 2022,
+    "month": 3,
+    "date": [15],
+    "title": "연차",
+    "description": "예!"
   }
 ]

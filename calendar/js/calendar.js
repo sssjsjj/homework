@@ -111,10 +111,11 @@ Calendar.prototype.markToday = function(){
 }
 // 스케쥴 가져오기
 Calendar.prototype.getSchedule = function(){
-  const localSchedule = JSON.parse(localStorage.getItem('schedule'))
+  // const localSchedule = JSON.parse(localStorage.getItem('schedule'))
+  const localSchedule = false
   if(!localSchedule) {
     const path = window.location.pathname.replace('/index.html','')
-    httpGet(`${path}/js/schedules.js`, responseText => {
+    httpGet(`${path}/js/schedules.json`, responseText => {
       this.schedules = JSON.parse(responseText)
       this.setScheduleLocal()
       this.drawSchedulesHandler()
