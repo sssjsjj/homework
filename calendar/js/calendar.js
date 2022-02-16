@@ -12,7 +12,8 @@ function Calendar(elem) {
   this.sorting = "month"
   // 카렌다 시작
   this.start = () => {
-    httpGet(`${window.location.pathname}/month.html`, responseText => {
+    const path = window.location.pathname.replace('/index.html','')
+    httpGet(`${path}/month.html`, responseText => {
       const areaCalendar = document.getElementById("areaCalendar")
       areaCalendar.innerHTML = responseText
       this.goToHash()
@@ -112,7 +113,8 @@ Calendar.prototype.markToday = function(){
 Calendar.prototype.getSchedule = function(){
   const localSchedule = JSON.parse(localStorage.getItem('schedule'))
   if(!localSchedule) {
-    httpGet(`${window.location.pathname}/js/schedules.js`, responseText => {
+    const path = window.location.pathname.replace('/index.html','')
+    httpGet(`${path}/js/schedules.js`, responseText => {
       this.schedules = JSON.parse(responseText)
       this.setScheduleLocal()
       this.drawSchedulesHandler()

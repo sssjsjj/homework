@@ -59,9 +59,8 @@ body, input, button{font-size: 14px;}
 .page-calendar table.calendar thead tr th{padding-top: 5px; font-weight: normal; font-size: 0.85em; color: var(--gray);}
 .page-calendar table.calendar tbody tr{border-bottom: 1px solid var(--light-gray);}
 .page-calendar table.calendar tbody tr td{position: relative; text-align: center;}
-.page-calendar table.calendar tbody tr td span.period{display: inline-block; width: 1rem; height: 1rem; padding: 3px 2px 1px; border-radius: 100%;}
-.page-calendar table.calendar tbody tr td span.period{display: inline-block; width: 1rem; height: 1rem; padding: 3px 2px 1px; border-radius: 100%;}
-.page-calendar table.calendar tbody tr td.today span.period{background-color: var(--point-color); color: #fff;}
+.page-calendar table.calendar tbody tr td span.date{display: inline-block;  padding: 3px 2px 1px; border-radius: 100%;}
+.page-calendar table.calendar tbody tr td.today span.date{background-color: var(--point-color); color: #fff;}
 .page-calendar table.calendar button.bar-schedule{display: block; position: relative; z-index: 1; margin-top: 3em; box-sizing: content-box; padding: 2px 0 4px; background-color: darkseagreen; color: #fff; border-radius: 5px; font-size: 0.85em; transition: padding 0.2s, margin 0.2s;} 
 .page-calendar table.calendar button.bar-schedule:hover {margin-left: -6px; padding-left: 6px; padding-right: 6px;}
 .page-calendar table.calendar button.add-schedule{display: inline-flex; justify-content: center; position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 10px; transition: box-shadow 0.2s;}
