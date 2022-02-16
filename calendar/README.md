@@ -1,5 +1,5 @@
 ## 캘린더
-[👀 작업 확인하기](https://sssjsjj.github.io/study/calendar/){:target="_blank"}
+[👀 작업 확인하기](https://sssjsjj.github.io/study/calendar/){: target="_blank"}
 ### 작업 조건
 - Vanilla Javascript 사용하기
 - 생성자 함수 사용하기
