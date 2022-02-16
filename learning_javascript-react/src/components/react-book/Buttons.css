@@ -1,9 +1,0 @@
-button.btn-block{appearance: none; padding: 8px 22px; border: 1px solid #666; background-color: transparent; border-radius: 5px; transition: 0.3s;}
-button.btn-block:hover{ background-color: #666; color: #fff;}
-
-/* Button Delete */
-.list-editable li{display: flex; padding: 10px; border-bottom: 1px solid #eee;}
-.list-editable li:hover {color: #ccc;}
-.list-editable li:hover .wrap-btn-editable {display: block;}
-.list-editable li .wrap-btn-editable {display: none; margin-left: auto;}
-.list-editable li .wrap-btn-editable button:hover {color: #333; background-color: #eee;}
